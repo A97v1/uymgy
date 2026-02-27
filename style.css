@@ -1,0 +1,482 @@
+/* ================================
+   RESET
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background: #d9cfb7; /* Soft beige */
+    color: #111;
+    line-height: 1.6;
+}
+
+/* Global Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* ================================
+   NAVBAR
+================================ */
+
+.navbar-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+}
+
+.navbar {
+    background: #f3efe6;
+    padding: 22px 50px;
+    border-radius: 80px;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* Logo */
+.logo {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+/* Nav links */
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #111;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+    opacity: 0.6;
+}
+
+/* Yellow Button */
+.btn-call {
+    background: #f4c430;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 40px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn-call:hover {
+    background: #e5b625;
+    transform: translateY(-2px);
+}
+
+/* ================================
+   HERO SECTION
+================================ */
+
+.hero {
+    text-align: center;
+    padding: 80px 20px 60px;
+}
+
+.hero h1 {
+    font-size: 60px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    max-width: 600px;
+    margin: 0 auto 30px;
+    color: #555;
+    font-size: 18px;
+}
+
+.hero .btn-call {
+    padding: 14px 30px;
+}
+
+/* ================================
+   SERVICES SECTION
+================================ */
+
+.services-section {
+    padding: 80px 5%;
+    background: #f4f4f4;
+}
+
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* ================================
+   SERVICE CARD
+================================ */
+
+.service-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 350px;
+    cursor: pointer;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    transition: 0.4s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+}
+
+/* Background Image */
+.service-card img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Gradient Overlay */
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(10,15,30,0.95),
+        rgba(10,15,30,0.6)
+    );
+}
+
+/* ================================
+   ICON CORNER
+================================ */
+
+.icon-circle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background: #fff;
+    border-bottom-left-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+}
+
+.icon-circle img {
+    width: 35px;
+    height: 35px;
+}
+
+.icon-circle.yellow {
+    background: #f4c430;
+}
+
+/* ================================
+   CARD CONTENT
+================================ */
+
+.card-content {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    color: #fff;
+    z-index: 2;
+}
+
+.card-content h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.card-content ul {
+    list-style: none;
+}
+
+.card-content ul li {
+    margin-bottom: 8px;
+    font-size: 15px;
+    position: relative;
+    padding-left: 20px;
+}
+
+/* Red Bullet */
+.card-content ul li::before {
+    content: "•";
+    color: #ff2c2c;
+    position: absolute;
+    left: 0;
+    font-size: 20px;
+}
+
+/* ================================
+   PROMO TEXT
+================================ */
+
+.promo-text {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 16px;
+}
+
+.promo-text span {
+    color: #e60000;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+
+/* ===============================
+   NEW HERO DESIGN
+================================ */
+
+.hero {
+    position: relative;
+    padding: 120px 5%;
+    background: url("hero-bg.jpg") center/cover no-repeat;
+    color: #fff;
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(10,15,30,0.95),
+        rgba(10,15,30,0.7)
+    );
+}
+
+.hero-container {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+}
+
+/* ===============================
+   SPEED BADGE
+================================ */
+
+.speed-badge {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+/* Yellow Circle */
+.price-circle {
+    background: #f5b642;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.price-circle .rs {
+    font-size: 14px;
+}
+
+.price-circle h3 {
+    font-size: 40px;
+    margin: 5px 0;
+}
+
+.price-circle .per {
+    font-size: 13px;
+}
+
+/* Red Speed Box */
+.speed-info {
+    background: #e51c23;
+    padding: 25px 40px;
+    border-radius: 15px;
+    margin-left: -20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.speed-info h4 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.speed-info p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* ===============================
+   HERO TEXT
+================================ */
+
+.hero h1 {
+    font-size: 70px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.hero-subtext {
+    max-width: 600px;
+    font-size: 18px;
+    opacity: 0.85;
+    margin-bottom: 30px;
+}
+
+/* Red Button */
+.btn-red {
+    background: #e51c23;
+    color: #fff;
+    border: none;
+    padding: 15px 35px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn-red:hover {
+    background: #c5151a;
+    transform: translateY(-3px);
+}
+
+
+.hero-section {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background: #050505;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Canvas Background */
+#canvas-container {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+/* Hero Content Above Background */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+}
+
+.hero-content h1 {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #aaa;
+}
+
+
+#layout-dialog {
+  --overlay-alpha: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: 100%;
+  max-height: 100%;
+  border: none;
+  background: transparent;
+  pointer-events: none;
+  background-color: color-mix(in srgb, var(--hex-black-1), transparent var(--overlay-alpha));
+}
+
+#layout-dialog[open] {
+  --overlay-alpha: 40%;
+  pointer-events: auto;
+}
+
+#layout-dialog::backdrop {
+  background: transparent;
+}
+
+#layout-dialog .item {
+  position: relative;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  width: 22rem;
+  height: 14.5rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid var(--hex-green-6);
+  font-size: 1rem;
+  color: var(--hex-green-6);
+  background-color: var(--hex-green-1);
+}
+
+#layout-dialog[open] .item {
+  visibility: visible;
+}
+
+#layout-dialog .item h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  will-change: font-size;
+  text-wrap: nowrap;
+}
+
+#layout-dialog .item h3 {
+  position: absolute;
+  top: 2.9rem;
+  right: 2rem;
+}
+
+#layout-usage-animate-modal-dialog .item {
+  cursor: pointer;
+}
+
+#layout-usage-animate-modal-dialog .item.is-open {
+  visibility: hidden;
+}
+
+#layout-usage-animate-modal-dialog .item p {
+  text-align: left;
+  display: none;
+}
+
+#layout-dialog .item p {
+  padding-top: 1rem;
+  border-top: 1px solid currentColor;  
+}
+
+#layout-dialog[open] .item p {
+  display: block;
+}

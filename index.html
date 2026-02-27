@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FirstPlace Agency</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+      <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="syle.css">
+</head>
+
+<body>
+
+<script>
+function menuSystem() {
+  return {
+    open: false,
+    activePage: null,
+    activeThread: null,
+
+    setPage(page) {
+      this.activePage = this.activePage === page ? null : page
+      this.activeThread = null
+    },
+
+    setThread(thread) {
+      this.activeThread = thread
+    }
+  }
+}
+</script>
+
+
+<div x-data="menuSystem()" @keydown.escape.window="open = false">
+
+<!-- Floating Button -->
+<div x-show="!open"
+     class="fixed top-6 left-6 z-[100]">
+  <button @click="open = true"
+          class="w-14 h-14 rounded-2xl backdrop-blur-2xl bg-white/20 border border-white/30 shadow-lg flex items-center justify-center">
+    ✦
+  </button>
+</div>
+
+<!-- Overlay -->
+<div x-show="open"
+     x-transition.opacity
+     @click="open = false"
+     class="fixed inset-0 bg-black/30 backdrop-blur-sm z-40">
+</div>
+
+<!-- Slide Panel -->
+<div x-show="open"
+     x-transition:enter="transition transform duration-500"
+     x-transition:enter-start="-translate-x-full"
+     x-transition:enter-end="translate-x-0"
+     x-transition:leave="transition transform duration-400"
+     x-transition:leave-start="translate-x-0"
+     x-transition:leave-end="-translate-x-full"
+     class="fixed top-0 left-0 h-full w-[950px] flex gap-6 p-8 z-50">
+
+  <div class="flex gap-6 w-full">
+
+    <!-- LEFT ICON RAIL -->
+    <div class="w-[90px] h-full bg-white/40 backdrop-blur-2xl border border-white/40 rounded-[40px] shadow-lg flex flex-col items-center py-8 gap-8">
+      <div class="text-xl">✦</div>
+    </div>
+
+    <!-- CENTER PANEL -->
+    <div class="flex-1 h-full bg-white/40 backdrop-blur-2xl border border-white/40 rounded-[40px] shadow-lg p-10 relative">
+
+      <button @click="open = false"
+              class="absolute top-6 right-6 text-xl">
+        ✕
+      </button>
+
+      <h2 class="text-lg font-semibold mb-8">✦ Menu</h2>
+
+      <div class="space-y-2">
+
+        <div @click="setPage('Home')"
+             :class="activePage === 'Home' ? 'bg-white/60 font-medium' : 'hover:bg-white/50'"
+             class="px-5 py-3 rounded-xl transition cursor-pointer">
+          Home
+        </div>
+
+        <div @click="setPage('Messages')"
+             :class="activePage === 'Messages' ? 'bg-white/60 font-medium' : 'hover:bg-white/50'"
+             class="px-5 py-3 rounded-xl transition cursor-pointer">
+          Messages
+        </div>
+
+        <div @click="setPage('Integrations')"
+             :class="activePage === 'Integrations' ? 'bg-white/60 font-medium' : 'hover:bg-white/50'"
+             class="px-5 py-3 rounded-xl transition cursor-pointer">
+          Integrations
+        </div>
+
+        <div @click="setPage('Finance')"
+             :class="activePage === 'Finance' ? 'bg-white/60 font-medium' : 'hover:bg-white/50'"
+             class="px-5 py-3 rounded-xl transition cursor-pointer">
+          Finance
+        </div>
+
+      </div>
+
+      <!-- THREADS (UNCHANGED) -->
+      <div class="mt-10">
+
+        <div @click="setPage('Threads')"
+             :class="activePage === 'Threads' ? 'bg-black text-white' : 'hover:bg-white/50'"
+             class="px-5 py-3 rounded-xl flex justify-between transition cursor-pointer">
+          Threads
+          <span>-</span>
+        </div>
+
+        <div x-show="activePage === 'Threads'"
+             class="mt-4 ml-4 space-y-2">
+
+          <div class="px-4 py-2 rounded-lg hover:bg-white/50 transition">
+            Fignuts
+          </div>
+
+          <div @click="setThread('Enlarz System')"
+               :class="activeThread === 'Enlarz System' ? 'bg-white/60 font-medium' : 'hover:bg-white/50'"
+               class="px-4 py-2 rounded-lg transition cursor-pointer">
+            Enlarz System
+          </div>
+
+          <div class="px-4 py-2 rounded-lg hover:bg-white/50 transition">
+            Hugicons
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT PANEL (HIDDEN UNTIL CLICK) -->
+    <div x-show="activePage && activePage !== 'Threads'"
+         x-transition
+         class="w-[340px] h-full bg-white/40 backdrop-blur-2xl border border-white/40 rounded-[40px] shadow-lg p-10">
+
+      <div x-show="activePage === 'Home'">
+        <h3 class="font-semibold mb-6">Home Options</h3>
+        <div class="space-y-2">
+          <div class="px-4 py-3 rounded-xl hover:bg-white/50">Dashboard</div>
+          <div class="px-4 py-3 rounded-xl hover:bg-white/50">Activity</div>
+        </div>
+      </div>
+
+      <div x-show="activePage === 'Messages'">
+        <h3 class="font-semibold mb-6">Messages</h3>
+        <div class="space-y-2">
+          <div class="px-4 py-3 rounded-xl hover:bg-white/50">Inbox</div>
+          <div class="px-4 py-3 rounded-xl hover:bg-white/50">Sent</div>
+        </div>
+      </div>
+
+      <div x-show="activePage === 'Integrations'">
+        <h3 class="font-semibold mb-6">Integrations</h3>
+        <div class="space-y-2">
+          <div class="px-4 py-3 rounded-xl hover:bg-white/50">API</div>
+          <div class="px-4 py-3 rounded-xl hover:bg-white/50">Webhooks</div>
+        </div>
+      </div>
+
+      <div x-show="activePage === 'Finance'">
+        <h3 class="font-semibold mb-6">Finance</h3>
+        <div class="space-y-2">
+          <div class="px-4 py-3 rounded-xl hover:bg-white/50">Billing</div>
+          <div class="px-4 py-3 rounded-xl hover:bg-white/50">Invoices</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- ================= HERO SECTION ================= -->
+<section class="relative h-screen overflow-hidden">
+
+    <div id="vanta-bg" class="absolute inset-0 z-0"></div>
+
+    <div class="relative z-10 text-white px-12 pt-40 max-w-5xl">
+
+        <span class="hero-badge text-orange-500 text-xs font-semibold uppercase mb-6 block">
+            Super Fast Network
+        </span>
+
+        <h1 class="hero-title text-5xl md:text-7xl font-bold leading-tight mb-8">
+            100 Mbps Super Speed <br>
+            Broadband <span class="hero-accent">Internet</span>
+        </h1>
+
+        <p class="hero-subtext text-lg md:text-xl text-gray-300 mb-12 max-w-2xl leading-relaxed">
+            Experience lightning-fast connectivity with stable performance,
+            seamless streaming, and 24/7 support.
+        </p>
+
+        <div class="flex gap-6">
+
+            <a href="#"
+               class="cta-primary px-10 py-4 bg-orange-600 font-semibold rounded-sm hover:scale-105 transition duration-300">
+                GET CONNECTION NOW
+            </a>
+
+            <a href="#"
+               class="cta-secondary px-10 py-4 border border-white font-semibold rounded-sm hover:bg-white hover:text-black transition duration-300">
+                VIEW PLANS
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="absolute bottom-0 left-0 w-full h-48 
+                bg-gradient-to-b from-transparent to-black z-10 pointer-events-none">
+    </div>
+
+</section>
+
+
+
+
+
+<!-- ================= SAAS LEVEL SERVICES SECTION ================= -->
+<section class="relative py-36 bg-gradient-to-b from-slate-50 via-white to-slate-50 overflow-hidden">
+
+    <!-- Background Glow -->
+    <div class="absolute -top-40 -left-40 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-40 -right-40 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-3xl"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+
+        <!-- Header -->
+        <div class="text-center max-w-3xl mx-auto mb-24">
+
+            <span class="inline-block px-4 py-1 text-sm font-medium bg-blue-100 text-blue-600 rounded-full mb-6">
+                Modern Fiber Solutions
+            </span>
+
+            <h2 class="text-4xl md:text-6xl font-bold text-slate-900 leading-tight mb-6">
+                High-Speed Internet <br>
+                <span class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                    Built for the Future
+                </span>
+            </h2>
+
+            <p class="text-lg text-slate-500 leading-relaxed">
+                Ultra-reliable fiber connectivity designed for modern homes,
+                growing startups, and enterprise businesses.
+            </p>
+
+        </div>
+
+        <!-- Cards -->
+        <div class="grid md:grid-cols-2 gap-16">
+
+            <!-- ================= RESIDENTIAL CARD ================= -->
+            <div class="group relative">
+
+                <!-- Image -->
+                <div class="overflow-hidden rounded-3xl shadow-xl">
+                    <img src="home.jpg"
+                         class="w-full h-[550px] object-cover transition duration-700 group-hover:scale-105">
+                </div>
+
+                <!-- Content -->
+                <div class="relative -mt-24 mx-8 bg-white rounded-3xl shadow-2xl p-12 border border-slate-100 transition duration-500 group-hover:-translate-y-2">
+
+                    <span class="text-xs font-semibold tracking-widest text-blue-600">
+                        RESIDENTIAL PLAN
+                    </span>
+
+                    <h3 class="text-3xl font-bold text-slate-900 mt-4 mb-4">
+                        Home Fiber Broadband
+                    </h3>
+
+                    <p class="text-slate-500 mb-8">
+                        Stream 4K content, game without lag, and power
+                        your smart home with lightning-fast fiber.
+                    </p>
+
+                    <!-- Features -->
+                    <div class="space-y-4 mb-8">
+
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 bg-blue-100 text-blue-600 flex items-center justify-center rounded-full text-xs font-bold">✓</div>
+                            <p class="text-slate-600">Up to 100 Mbps Speed</p>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 bg-blue-100 text-blue-600 flex items-center justify-center rounded-full text-xs font-bold">✓</div>
+                            <p class="text-slate-600">Unlimited Data</p>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 bg-blue-100 text-blue-600 flex items-center justify-center rounded-full text-xs font-bold">✓</div>
+                            <p class="text-slate-600">24/7 Dedicated Support</p>
+                        </div>
+
+                    </div>
+
+                    <!-- CTA -->
+                    <button class="w-full py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
+                        Get Started
+                    </button>
+
+                </div>
+            </div>
+
+
+            <!-- ================= BUSINESS CARD ================= -->
+            <div class="group relative">
+
+                <!-- Image -->
+                <div class="overflow-hidden rounded-3xl shadow-xl">
+                    <img src="office.jpg"
+                         class="w-full h-[550px] object-cover transition duration-700 group-hover:scale-105">
+                </div>
+
+                <!-- Content -->
+                <div class="relative -mt-24 mx-8 bg-white rounded-3xl shadow-2xl p-12 border border-slate-100 transition duration-500 group-hover:-translate-y-2">
+
+                    <span class="text-xs font-semibold tracking-widest text-indigo-600">
+                        BUSINESS PLAN
+                    </span>
+
+                    <h3 class="text-3xl font-bold text-slate-900 mt-4 mb-4">
+                        Enterprise Fiber Internet
+                    </h3>
+
+                    <p class="text-slate-500 mb-8">
+                        Dedicated bandwidth, SLA-backed uptime, and
+                        scalable performance for growing teams.
+                    </p>
+
+                    <!-- Features -->
+                    <div class="space-y-4 mb-8">
+
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 bg-indigo-100 text-indigo-600 flex items-center justify-center rounded-full text-xs font-bold">✓</div>
+                            <p class="text-slate-600">Guaranteed Bandwidth</p>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 bg-indigo-100 text-indigo-600 flex items-center justify-center rounded-full text-xs font-bold">✓</div>
+                            <p class="text-slate-600">99.9% SLA Uptime</p>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 bg-indigo-100 text-indigo-600 flex items-center justify-center rounded-full text-xs font-bold">✓</div>
+                            <p class="text-slate-600">Priority Business Support</p>
+                        </div>
+
+                    </div>
+
+                    <!-- CTA -->
+                    <button class="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition">
+                        Contact Sales
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+<!-- ================= FEATURE SECTION ================= -->
+<section class="py-28 bg-gradient-to-b from-white to-blue-50 overflow-hidden">
+
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+
+        <!-- LEFT IMAGE SIDE -->
+        <div class="relative flex justify-center">
+
+            <!-- Diamond Image -->
+            <div class="relative w-[350px] h-[350px] rotate-45 rounded-3xl overflow-hidden shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1587614382346-4ec70e388b28"
+                     class="w-full h-full object-cover -rotate-45 scale-125"
+                     alt="Family Watching TV">
+            </div>
+
+            <!-- Floating Stats Badge -->
+            <div class="absolute bottom-8 right-8 bg-red-500 text-white rounded-full w-32 h-32 flex flex-col items-center justify-center shadow-2xl">
+                <h3 class="text-3xl font-bold">25K+</h3>
+                <p class="text-sm">Clients</p>
+            </div>
+
+        </div>
+
+        <!-- RIGHT CONTENT SIDE -->
+        <div>
+
+            <p class="text-sm tracking-widest text-gray-400 mb-4">
+                <span class="text-blue-600 font-semibold">/</span> WHO WE ARE
+            </p>
+
+            <h2 class="text-4xl md:text-5xl font-bold leading-tight mb-6">
+                Providing live TV services <br>
+                with <span class="text-blue-600">fast internet</span>
+            </h2>
+
+            <p class="text-gray-500 mb-8 leading-relaxed">
+                FirstPlace Agency provides high-speed broadband and smart TV
+                solutions designed to connect every home with reliable and
+                secure technology.
+            </p>
+
+            <!-- Experience Box -->
+            <div class="bg-white shadow-xl rounded-2xl p-6 mb-8 w-fit">
+                <h3 class="text-xl font-bold text-gray-800">25+ Years Experience</h3>
+                <p class="text-gray-500 text-sm mt-2">
+                    Delivering high-speed broadband solutions across cities.
+                </p>
+            </div>
+
+            <!-- Features List -->
+            <div class="space-y-4">
+
+                <div class="flex items-center gap-3">
+                    <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center">
+                        <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    </div>
+                    <p class="text-gray-600">Ultra-fast fiber broadband</p>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center">
+                        <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    </div>
+                    <p class="text-gray-600">Reliable for gamers & streamers</p>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center">
+                        <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    </div>
+                    <p class="text-gray-600">Secure & encrypted network</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= WHY CHOOSE SECTION ================= -->
+<section class="relative py-28 bg-gradient-to-b from-slate-50 via-white to-slate-50 overflow-hidden">
+
+    <!-- Background Glow Effects -->
+    <div class="absolute -top-40 -left-40 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-40 -right-40 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-3xl"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
+
+            <!-- LEFT SIDE CONTENT -->
+            <div class="max-w-xl">
+
+                <p class="text-sm tracking-widest text-blue-600 font-semibold mb-4">
+                    WHY SELECT US
+                </p>
+
+                <h2 class="text-4xl md:text-5xl font-bold leading-tight text-gray-900">
+                    Why Choose FirstPlace <br>
+                    <span class="text-blue-600">Fiber Internet</span>
+                </h2>
+
+                <p class="mt-6 text-gray-500 leading-relaxed">
+                    Delivering next-generation fiber connectivity with unmatched speed,
+                    reliability and customer-first service experience.
+                </p>
+
+                <button class="mt-10 px-8 py-3 rounded-full 
+                               bg-blue-600 text-white font-medium
+                               shadow-lg hover:shadow-xl
+                               hover:bg-blue-700 transition duration-300">
+                    Get Started →
+                </button>
+
+            </div>
+
+
+            <!-- RIGHT SIDE FEATURE CARDS -->
+            <div class="grid sm:grid-cols-2 gap-8">
+
+                <!-- Card 1 -->
+                <div class="group relative p-8 rounded-3xl
+                            bg-white/40 backdrop-blur-xl
+                            border border-white/30
+                            shadow-xl hover:shadow-2xl
+                            transition duration-500 hover:-translate-y-2">
+
+                    <div class="absolute inset-0 rounded-3xl 
+                                bg-gradient-to-br from-blue-500/10 to-transparent 
+                                opacity-0 group-hover:opacity-100 
+                                transition duration-500">
+                    </div>
+
+                    <div class="relative z-10">
+
+                        <div class="w-14 h-14 mb-6 rounded-2xl
+                                    bg-gradient-to-br from-blue-600 to-blue-500
+                                    flex items-center justify-center shadow-lg">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 fill="none" viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="white"
+                                 class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M13.5 10.5V3l-9 12h6v6l9-12h-6z"/>
+                            </svg>
+
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">
+                            Fastest Broadband Speeds
+                        </h3>
+
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Ultra-fast fiber internet optimized for streaming,
+                            gaming and multi-device connectivity.
+                        </p>
+
+                    </div>
+                </div>
+
+
+                <!-- Card 2 -->
+                <div class="group relative p-8 rounded-3xl
+                            bg-white/40 backdrop-blur-xl
+                            border border-white/30
+                            shadow-xl hover:shadow-2xl
+                            transition duration-500 hover:-translate-y-2">
+
+                    <div class="absolute inset-0 rounded-3xl 
+                                bg-gradient-to-br from-blue-500/10 to-transparent 
+                                opacity-0 group-hover:opacity-100 
+                                transition duration-500">
+                    </div>
+
+                    <div class="relative z-10">
+
+                        <div class="w-14 h-14 mb-6 rounded-2xl
+                                    bg-gradient-to-br from-blue-600 to-blue-500
+                                    flex items-center justify-center shadow-lg">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 fill="none" viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="white"
+                                 class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M18 10.5V9a6 6 0 10-12 0v1.5M6 10.5v4.5a2 2 0 002 2h1.5M18 10.5v4.5a2 2 0 01-2 2h-1.5"/>
+                            </svg>
+
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">
+                            24/7 Customer Support
+                        </h3>
+
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Dedicated assistance available anytime to keep your
+                            connection smooth and uninterrupted.
+                        </p>
+
+                    </div>
+                </div>
+
+
+                <!-- Card 3 -->
+                <div class="group relative p-8 rounded-3xl
+                            bg-white/40 backdrop-blur-xl
+                            border border-white/30
+                            shadow-xl hover:shadow-2xl
+                            transition duration-500 hover:-translate-y-2">
+
+                    <div class="absolute inset-0 rounded-3xl 
+                                bg-gradient-to-br from-blue-500/10 to-transparent 
+                                opacity-0 group-hover:opacity-100 
+                                transition duration-500">
+                    </div>
+
+                    <div class="relative z-10">
+
+                        <div class="w-14 h-14 mb-6 rounded-2xl
+                                    bg-gradient-to-br from-blue-600 to-blue-500
+                                    flex items-center justify-center shadow-lg">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 fill="none" viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="white"
+                                 class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M12 3c4.97 0 9 4.03 9 9s-4.03 9-9 9-9-4.03-9-9 4.03-9 9-9z"/>
+                            </svg>
+
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">
+                            100% Fiber Infrastructure
+                        </h3>
+
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Dedicated fiber backbone engineered for maximum
+                            stability, reliability and future scalability.
+                        </p>
+
+                    </div>
+                </div>
+
+
+                <!-- Card 4 -->
+                <div class="group relative p-8 rounded-3xl
+                            bg-white/40 backdrop-blur-xl
+                            border border-white/30
+                            shadow-xl hover:shadow-2xl
+                            transition duration-500 hover:-translate-y-2">
+
+                    <div class="absolute inset-0 rounded-3xl 
+                                bg-gradient-to-br from-blue-500/10 to-transparent 
+                                opacity-0 group-hover:opacity-100 
+                                transition duration-500">
+                    </div>
+
+                    <div class="relative z-10">
+
+                        <div class="w-14 h-14 mb-6 rounded-2xl
+                                    bg-gradient-to-br from-blue-600 to-blue-500
+                                    flex items-center justify-center shadow-lg">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 fill="none" viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="white"
+                                 class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M3 12h18M12 3v18"/>
+                            </svg>
+
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">
+                            Reliable Network Uptime
+                        </h3>
+
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Enterprise-grade uptime ensuring consistent
+                            connectivity without unexpected interruptions.
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+<!-- ================= ULTRA PREMIUM CHANNELS SECTION ================= -->
+<section class="relative py-36 px-6 bg-[#f6f7fb] overflow-hidden">
+
+  <div class="max-w-7xl mx-auto">
+
+    <div class="relative rounded-[60px] 
+                bg-gradient-to-br from-indigo-700 via-violet-700 to-purple-800
+                text-white px-16 py-28 md:px-24 md:py-32
+                shadow-[0_60px_160px_rgba(0,0,0,0.25)] 
+                overflow-hidden">
+
+      <!-- Decorative Dot Pattern -->
+      <div class="absolute inset-0 opacity-10
+           bg-[radial-gradient(circle_at_20%_30%,white_2px,transparent_2px)]
+           bg-[length:26px_26px]"></div>
+
+      <!-- Blur Glow Effects -->
+      <div class="absolute -top-40 -left-40 w-[600px] h-[600px] bg-white/10 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-40 -right-40 w-[600px] h-[600px] bg-indigo-400/20 rounded-full blur-3xl"></div>
+      <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-purple-400/20 rounded-full blur-3xl"></div>
+
+      <div class="relative z-10 grid lg:grid-cols-2 gap-28 items-center">
+
+        <!-- LEFT CONTENT -->
+        <div class="max-w-xl">
+
+          <span class="inline-block mb-6 text-xs uppercase tracking-[0.2em] text-indigo-200">
+            Entertainment Included
+          </span>
+
+          <h2 class="text-4xl md:text-5xl xl:text-6xl font-semibold leading-tight tracking-tight mb-8">
+            250+ Premium Channels. <br>
+            Limitless Entertainment.
+          </h2>
+
+          <p class="text-indigo-100 text-lg leading-relaxed mb-12">
+            From breaking news to live sports and blockbuster movies —
+            everything you love, bundled with ultra-fast broadband.
+          </p>
+
+          <button class="bg-black text-white px-8 py-4 rounded-xl font-medium 
+                         hover:bg-gray-900 transition duration-300 
+                         shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
+            View Channel List
+          </button>
+
+        </div>
+
+        <!-- RIGHT CATEGORY GRID -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
+
+          <!-- Card -->
+          <a href="#" 
+             class="group relative bg-white/90 backdrop-blur-md
+                    rounded-2xl h-28 flex items-center justify-center 
+                    text-gray-900 font-medium 
+                    shadow-xl hover:-translate-y-2 
+                    hover:shadow-2xl transition duration-300">
+
+            <span class="relative z-10">News</span>
+            <div class="absolute inset-0 rounded-2xl 
+                        bg-gradient-to-br from-indigo-400/20 to-purple-400/20 
+                        opacity-0 group-hover:opacity-100 transition"></div>
+          </a>
+
+          <a href="#" class="group relative bg-white/90 backdrop-blur-md rounded-2xl h-28 flex items-center justify-center text-gray-900 font-medium shadow-xl hover:-translate-y-2 hover:shadow-2xl transition duration-300">
+            <span class="relative z-10">Sports</span>
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition"></div>
+          </a>
+
+          <a href="#" class="group relative bg-white/90 backdrop-blur-md rounded-2xl h-28 flex items-center justify-center text-gray-900 font-medium shadow-xl hover:-translate-y-2 hover:shadow-2xl transition duration-300">
+            <span class="relative z-10">Movies</span>
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition"></div>
+          </a>
+
+          <a href="#" class="group relative bg-white/90 backdrop-blur-md rounded-2xl h-28 flex items-center justify-center text-gray-900 font-medium shadow-xl hover:-translate-y-2 hover:shadow-2xl transition duration-300">
+            <span class="relative z-10">Kids</span>
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition"></div>
+          </a>
+
+          <a href="#" class="group relative bg-white/90 backdrop-blur-md rounded-2xl h-28 flex items-center justify-center text-gray-900 font-medium shadow-xl hover:-translate-y-2 hover:shadow-2xl transition duration-300">
+            <span class="relative z-10">Music</span>
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition"></div>
+          </a>
+
+          <a href="#" class="group relative bg-white/90 backdrop-blur-md rounded-2xl h-28 flex items-center justify-center text-gray-900 font-medium shadow-xl hover:-translate-y-2 hover:shadow-2xl transition duration-300">
+            <span class="relative z-10">More</span>
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition"></div>
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!--========== Reviews ===========-->
+
+  <section class="py-28">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <!-- Header -->
+      <div class="text-center mb-20">
+
+        <div 
+          class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-200 shadow-sm mb-6"
+          data-aos="fade-down"
+          data-aos-duration="800"
+        >
+          <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+          <span class="text-sm text-gray-600">Customer Stories</span>
+        </div>
+
+        <h2 
+          class="text-5xl font-semibold text-gray-900 tracking-tight"
+          data-aos="fade-up"
+          data-aos-delay="100"
+          data-aos-duration="800"
+        >
+          Why Teams Love Working With Trickly
+        </h2>
+
+        <p 
+          class="text-gray-500 mt-5 max-w-2xl mx-auto leading-relaxed"
+          data-aos="fade-up"
+          data-aos-delay="200"
+          data-aos-duration="800"
+        >
+          Real feedback from teams who achieved measurable growth using our platform.
+        </p>
+
+      </div>
+
+      <!-- Testimonials Grid -->
+      <div class="grid md:grid-cols-3 gap-10">
+
+        <!-- Card Template -->
+        <!-- Card 1 -->
+        <div 
+          class="bg-white rounded-2xl p-8 border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_10px_35px_rgba(0,0,0,0.08)]"
+          data-aos="fade-up"
+          data-aos-delay="100"
+          data-aos-duration="800"
+        >
+          <p class="text-gray-600 leading-relaxed mb-8">
+            “We improved team efficiency by 40% after switching.
+            The workflow automation is seamless and intuitive.”
+          </p>
+          <div class="flex items-center gap-4">
+            <img src="https://i.pravatar.cc/48?img=1" class="w-11 h-11 rounded-full">
+            <div>
+              <h4 class="font-semibold text-gray-900">Adam King</h4>
+              <p class="text-sm text-gray-500">Product Lead</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div 
+          class="bg-white rounded-2xl p-8 border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_10px_35px_rgba(0,0,0,0.08)]"
+          data-aos="fade-up"
+          data-aos-delay="200"
+          data-aos-duration="800"
+        >
+          <p class="text-gray-600 leading-relaxed mb-8">
+            “Collaboration has improved dramatically.
+            Our team now works faster and with fewer blockers.”
+          </p>
+          <div class="flex items-center gap-4">
+            <img src="https://i.pravatar.cc/48?img=2" class="w-11 h-11 rounded-full">
+            <div>
+              <h4 class="font-semibold text-gray-900">Jason Carter</h4>
+              <p class="text-sm text-gray-500">CTO</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div 
+          class="bg-white rounded-2xl p-8 border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_10px_35px_rgba(0,0,0,0.08)]"
+          data-aos="fade-up"
+          data-aos-delay="300"
+          data-aos-duration="800"
+        >
+          <p class="text-gray-600 leading-relaxed mb-8">
+            “The reporting tools are a game-changer.
+            We now make faster & smarter decisions.”
+          </p>
+          <div class="flex items-center gap-4">
+            <img src="https://i.pravatar.cc/48?img=3" class="w-11 h-11 rounded-full">
+            <div>
+              <h4 class="font-semibold text-gray-900">Lola Marsh</h4>
+              <p class="text-sm text-gray-500">Team Manager</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div 
+          class="bg-white rounded-2xl p-8 border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_10px_35px_rgba(0,0,0,0.08)]"
+          data-aos="fade-up"
+          data-aos-delay="400"
+          data-aos-duration="800"
+        >
+          <p class="text-gray-600 leading-relaxed mb-8">
+            “Setup took minutes and onboarding was effortless.
+            The UI is clean and extremely user-friendly.”
+          </p>
+          <div class="flex items-center gap-4">
+            <img src="https://i.pravatar.cc/48?img=4" class="w-11 h-11 rounded-full">
+            <div>
+              <h4 class="font-semibold text-gray-900">Olivia Hart</h4>
+              <p class="text-sm text-gray-500">Operations Lead</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div 
+          class="bg-white rounded-2xl p-8 border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_10px_35px_rgba(0,0,0,0.08)]"
+          data-aos="fade-up"
+          data-aos-delay="500"
+          data-aos-duration="800"
+        >
+          <p class="text-gray-600 leading-relaxed mb-8">
+            “Our productivity skyrocketed within weeks.
+            Highly recommend for scaling teams.”
+          </p>
+          <div class="flex items-center gap-4">
+            <img src="https://i.pravatar.cc/48?img=5" class="w-11 h-11 rounded-full">
+            <div>
+              <h4 class="font-semibold text-gray-900">Maya Stone</h4>
+              <p class="text-sm text-gray-500">Marketing Director</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div 
+          class="bg-white rounded-2xl p-8 border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_10px_35px_rgba(0,0,0,0.08)]"
+          data-aos="fade-up"
+          data-aos-delay="600"
+          data-aos-duration="800"
+        >
+          <p class="text-gray-600 leading-relaxed mb-8">
+            “Reliable, fast, and powerful.
+            It completely changed how we operate daily.”
+          </p>
+          <div class="flex items-center gap-4">
+            <img src="https://i.pravatar.cc/48?img=6" class="w-11 h-11 rounded-full">
+            <div>
+              <h4 class="font-semibold text-gray-900">Ryan Cole</h4>
+              <p class="text-sm text-gray-500">Founder</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+
+
+
+
+  <style>
+    .pricing-card {
+      transition: all 0.35s ease;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-8px);
+      border-color: #2563eb;
+      box-shadow: 0 15px 40px rgba(37, 99, 235, 0.25);
+    }
+
+    .pricing-card:hover .price {
+      color: #2563eb;
+    }
+
+    .pricing-card:hover .btn-primary {
+      background-color: #2563eb;
+      color: white;
+    }
+  </style>
+
+<section class="py-28">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="text-center mb-20">
+      <p class="text-sm text-gray-500 mb-3">Pricing Plans</p>
+      <h2 class="text-5xl font-semibold text-gray-900 tracking-tight">
+        Choose The Perfect Plan
+      </h2>
+      <p class="text-gray-500 mt-5 max-w-2xl mx-auto">
+        Flexible internet packages designed to fit your needs.
+      </p>
+    </div>
+
+    <!-- Pricing Cards -->
+    <div class="grid md:grid-cols-3 gap-10">
+
+      <!-- Bronze -->
+      <div class="pricing-card bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
+
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">
+          Bronze Package
+        </h3>
+
+        <div class="flex items-end gap-1 mb-6">
+          <span class="price text-4xl font-bold text-gray-900">Rs499.0</span>
+          <span class="text-gray-500 mb-1">/Month</span>
+        </div>
+
+        <button class="btn-primary w-full py-3 rounded-lg bg-gray-100 text-gray-800 font-medium mb-8 transition">
+          140 MBPS Speed
+        </button>
+
+        <ul class="space-y-3 text-gray-600 text-sm">
+          <li>✓ INTERNET</li>
+          <li>✓ 4K Youtube and Facebook Stream.</li>
+          <li>✓ Optical Fiber Connection</li>
+          <li>✓ IPv6 Public IP Only</li>
+          <li>✓ 24/7 Phone and Online Support</li>
+        </ul>
+      </div>
+
+      <!-- Silver -->
+      <div class="pricing-card bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
+
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">
+          Silver Package
+        </h3>
+
+        <div class="flex items-end gap-1 mb-6">
+          <span class="price text-4xl font-bold text-gray-900">Rs.799.0</span>
+          <span class="text-gray-500 mb-1">/Month</span>
+        </div>
+
+        <button class="btn-primary w-full py-3 rounded-lg bg-gray-100 text-gray-800 font-medium mb-8 transition">
+          240 MBPS Speed
+        </button>
+
+        <ul class="space-y-3 text-gray-600 text-sm">
+          <li>✓ INTERNET + TV</li>
+          <li>✓ 4K Youtube and Facebook Stream.</li>
+          <li>✓ Optical Fiber Connection</li>
+          <li>✓ IPv6 Public IP Only</li>
+          <li>✓ 24/7 Phone and Online Support</li>
+        </ul>
+      </div>
+
+      <!-- Gold -->
+      <div class="pricing-card bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
+
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">
+          Gold Package
+        </h3>
+
+        <div class="flex items-end gap-1 mb-6">
+          <span class="price text-4xl font-bold text-gray-900">Rs.999.0</span>
+          <span class="text-gray-500 mb-1">/Month</span>
+        </div>
+
+        <button class="btn-primary w-full py-3 rounded-lg bg-gray-100 text-gray-800 font-medium mb-8 transition">
+          340 MBPS Speed
+        </button>
+
+        <ul class="space-y-3 text-gray-600 text-sm">
+          <li>✓ INTERNET + TV + MOBILE</li>
+          <li>✓ 4K Youtube and Facebook Stream.</li>
+          <li>✓ Optical Fiber Connection</li>
+          <li>✓ IPv6 Public IP Only</li>
+          <li>✓ 24/7 Phone and Online Support</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<style>
+body{
+  font-family: Inter, sans-serif;
+  background: #f6f7fb;
+}
+.glass-card{
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.6);
+}
+</style>
+
+<!-- ================= BROADBAND HERO ================= -->
+<section class="relative min-h-screen flex items-center px-6 py-24 overflow-hidden bg-gradient-to-br from-[#eef3f9] via-[#f6f9fd] to-[#ffffff]">
+
+  <!-- Background Glow Effects -->
+  <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-blue-200/40 rounded-full blur-3xl"></div>
+  <div class="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-indigo-200/30 rounded-full blur-3xl"></div>
+
+  <div class="relative max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-20 items-center">
+
+    <!-- LEFT CONTENT -->
+    <div>
+
+      <span class="inline-block px-4 py-1 text-xs font-medium bg-black text-white rounded-full mb-6">
+        High-Speed Broadband
+      </span>
+
+      <h1 class="text-4xl md:text-5xl xl:text-6xl font-semibold leading-tight text-gray-900 mb-6 tracking-tight">
+        Fast Internet <br>
+        For Modern Living.
+      </h1>
+
+      <p class="text-gray-600 max-w-xl mb-10 leading-relaxed text-lg">
+        Experience ultra-fast WiFi with zero buffering, unlimited data,
+        and rock-solid reliability. Built for streaming, gaming,
+        remote work, and everything in between.
+      </p>
+
+      <!-- Feature Points -->
+      <div class="space-y-4 mb-10">
+        <div class="flex items-center gap-3">
+          <div class="w-5 h-5 rounded-full bg-black"></div>
+          <p class="text-gray-700 text-sm">Up to 1Gbps Speed</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="w-5 h-5 rounded-full bg-black"></div>
+          <p class="text-gray-700 text-sm">Unlimited Data</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="w-5 h-5 rounded-full bg-black"></div>
+          <p class="text-gray-700 text-sm">Next-Day Installation</p>
+        </div>
+      </div>
+
+      <button class="px-8 py-3 rounded-xl bg-black text-white font-medium shadow-md hover:bg-gray-900 transition">
+        Explore Plans →
+      </button>
+
+    </div>
+
+    <!-- RIGHT FORM CARD -->
+    <div class="flex justify-center">
+
+      <div class="glass-card rounded-3xl p-12 w-full max-w-md">
+
+        <h3 class="text-2xl font-semibold text-gray-900 tracking-tight text-center mb-3">
+          Check Availability
+        </h3>
+
+        <p class="text-sm text-gray-500 text-center mb-10">
+          Book your broadband installation in under 60 seconds.
+        </p>
+
+        <form class="space-y-6">
+
+          <div>
+            <label class="text-xs font-medium text-gray-500 uppercase tracking-wide">
+              Full Name
+            </label>
+            <input type="text"
+              class="w-full mt-2 px-4 py-3 rounded-xl 
+                     border border-gray-200 
+                     focus:outline-none focus:border-gray-400 
+                     focus:ring-1 focus:ring-gray-300 transition" />
+          </div>
+
+          <div>
+            <label class="text-xs font-medium text-gray-500 uppercase tracking-wide">
+              Phone Number
+            </label>
+            <input type="text"
+              class="w-full mt-2 px-4 py-3 rounded-xl 
+                     border border-gray-200 
+                     focus:outline-none focus:border-gray-400 
+                     focus:ring-1 focus:ring-gray-300 transition" />
+          </div>
+
+          <div>
+            <label class="text-xs font-medium text-gray-500 uppercase tracking-wide">
+              Service Address
+            </label>
+            <input type="text"
+              class="w-full mt-2 px-4 py-3 rounded-xl 
+                     border border-gray-200 
+                     focus:outline-none focus:border-gray-400 
+                     focus:ring-1 focus:ring-gray-300 transition" />
+          </div>
+
+          <button class="w-full py-3 rounded-xl bg-black text-white font-medium hover:bg-gray-900 transition">
+            Get Connected
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+<!-- CTA + Glass Footer Section -->
+<section class="relative py-28 px-6 bg-gradient-to-br from-[#e8eef7] via-[#edf4fb] to-[#f5f9ff] overflow-hidden">
+
+  <!-- Background Blur Effects -->
+  <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-blue-300/30 rounded-full blur-3xl"></div>
+  <div class="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-indigo-300/30 rounded-full blur-3xl"></div>
+
+  <div class="relative max-w-4xl mx-auto text-center mb-20">
+
+    <h2 class="text-4xl md:text-5xl font-semibold text-gray-900 tracking-tight leading-tight">
+      Ready to Take Control <br class="hidden md:block">
+      of Your Wifi Router
+    </h2>
+
+    <p class="mt-6 text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
+     Get ultra-fast broadband, seamless streaming, and reliable connectivity 
+     — all from the comfort of your home.
+    </p>
+
+    <div class="mt-10 flex justify-center gap-4 flex-wrap">
+
+      <button class="px-8 py-3 rounded-full bg-blue-600 text-white text-sm font-medium 
+                     shadow-lg hover:bg-blue-700 transition duration-300">
+        Start Now
+      </button>
+
+      <button class="px-8 py-3 rounded-full bg-white/70 backdrop-blur-md 
+                     border border-gray-300 text-gray-800 text-sm font-medium 
+                     hover:bg-white transition duration-300">
+        Contact Us
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Glass Footer Card -->
+  <div class="relative max-w-7xl mx-auto 
+              bg-white/60 backdrop-blur-2xl 
+              rounded-3xl p-14 
+              border border-white/40 
+              shadow-[0_10px_40px_rgba(0,0,0,0.05)]">
+
+    <div class="grid md:grid-cols-5 gap-14">
+
+      <!-- Left Section -->
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-2 mb-6">
+          <div class="w-6 h-6 bg-black rounded-full"></div>
+          <h2 class="text-lg font-semibold text-gray-900 tracking-tight">Air2net</h2>
+        </div>
+
+        <p class="text-gray-600 mb-6 text-sm">
+          Sign up to receive health tips.
+        </p>
+
+        <div class="flex items-center 
+                    bg-white/80 backdrop-blur-md 
+                    rounded-full border border-gray-200/60 
+                    overflow-hidden w-full max-w-sm shadow-sm">
+
+          <input 
+            type="email" 
+            placeholder="Enter your email"
+            class="flex-1 px-5 py-3 text-sm bg-transparent outline-none placeholder-gray-400"
+          />
+
+          <button class="bg-black text-white text-sm px-7 py-3 rounded-full 
+                         hover:bg-gray-800 transition duration-300">
+            Submit
+          </button>
+        </div>
+
+        <p class="text-xs text-gray-500 mt-4 max-w-sm leading-relaxed">
+          By subscribing you agree to our Privacy Policy and provide consent 
+          to receive updates from our company.
+        </p>
+      </div>
+
+      <!-- Column 1 -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900 mb-4">Useful Links</h3>
+        <ul class="space-y-3 text-sm text-gray-600">
+          <li><a href="about.html" class="hover:text-black transition">About Us</a></li>
+          <li><a href="service.html" class="hover:text-black transition">Our Service</a></li>
+          <li><a href="#" class="hover:text-black transition">Our Team</a></li>
+          <li><a href="#" class="hover:text-black transition">Testimonial</a></li>
+          <li><a href="#" class="hover:text-black transition">News & Media</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 2 -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900 mb-4">Services</h3>
+        <ul class="space-y-3 text-sm text-gray-600">
+          <li><a href="#" class="hover:text-black transition">Home Interent</a></li>
+          <li><a href="#" class="hover:text-black transition">Corporate Net</a></li>
+          <li><a href="#" class="hover:text-black transition">SKE Internet</a></li>
+          <li><a href="#" class="hover:text-black transition">Web Hosting</a></li>
+          <li><a href="#" class="hover:text-black transition">GPS Tracker</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3 -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900 mb-4">About</h3>
+        <ul class="space-y-3 text-sm text-gray-600">
+          <li><a href="#" class="hover:text-black transition">Providers</a></li>
+          <li><a href="about.html" class="hover:text-black transition">About Us</a></li>
+          <li><a href="faq.html" class="hover:text-black transition">FAQs</a></li>
+          <li><a href="#" class="hover:text-black transition">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4 -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900 mb-4">Legal</h3>
+        <ul class="space-y-3 text-sm text-gray-600">
+          <li><a href="#" class="hover:text-black transition">Terms & Conditions</a></li>
+          <li><a href="#" class="hover:text-black transition">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-black transition">Risk & Benefits</a></li>
+          <li><a href="#" class="hover:text-black transition">Telehealth Consent</a></li>
+          <li><a href="#" class="hover:text-black transition">Prescription Policy</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="border-t border-gray-200/60 mt-14 pt-6 text-center text-sm text-gray-500">
+      © 2026 Arnav. All rights reserved.
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<script>
+window.addEventListener("load", function () {
+  const preloader = document.getElementById("preloader");
+
+  // Fade in website
+  document.body.classList.add("loaded");
+
+  if (preloader) {
+    preloader.style.opacity = "0";
+    preloader.style.visibility = "hidden";
+
+    setTimeout(function () {
+      preloader.remove();
+    }, 1000);
+  }
+});
+</script>
+
+
+<script type="module">
+    import { initBackground } from './background.js';
+    initBackground();
+</script>
+
+<script>
+VANTA.GLOBE({
+  el: "#vanta-bg",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200,
+  minWidth: 200,
+  scale: 1,
+  scaleMobile: 1,
+  color: 0xff6600,        // globe lines color
+  backgroundColor: 0x000000
+})
+</script>
+
+
+<!-- ===== JS ===== -->
+<script type="module">
+import { createLayout, utils } from 'https://cdn.jsdelivr.net/npm/animejs/+esm';
+
+const buttons = utils.$('button');
+
+const $dialog = document.createElement('dialog');
+$dialog.id = 'layout-dialog';
+document.body.appendChild($dialog);
+
+const modalLayout = createLayout($dialog, {
+  children: ['.item', 'h1', 'h2', 'h3', 'p'],
+  properties: ['--overlay-alpha'],
+});
+
+function closeModal() {
+  let $item;
+  modalLayout.update(() => {
+    $dialog.close();
+    $item = buttons.find(b => b.classList.contains('is-open'));
+    $item.classList.remove('is-open');
+    $item.focus();
+  });
+}
+
+function openModal(e) {
+  const $item = e.target.closest('.item');
+  const $clone = $item.cloneNode(true);
+
+  $dialog.innerHTML = '';
+  $dialog.appendChild($clone);
+
+  modalLayout.update(() => {
+    $dialog.showModal();
+    $item.classList.add('is-open');
+  }, {
+    duration: $item.dataset.duration
+  });
+}
+
+buttons.forEach(b => b.addEventListener('click', openModal));
+$dialog.addEventListener('cancel', closeModal);
+$dialog.addEventListener('click', closeModal);
+</script>
+
+
+  <script>
+    AOS.init({
+      once: true,
+      easing: 'ease-out-cubic'
+    });
+  </script>
+
+
+</body>
+</html>
